@@ -2,6 +2,7 @@ package lumien.bloodmoon.server;
 
 import lumien.bloodmoon.Bloodmoon;
 import lumien.bloodmoon.config.BloodmoonConfig;
+import lumien.bloodmoon.lib.ModIntegration;
 import lumien.bloodmoon.network.PacketHandler;
 import lumien.bloodmoon.network.messages.MessageBloodmoonStatus;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +22,7 @@ public class BloodmoonHandler extends WorldSavedData
 {
 	public static BloodmoonHandler INSTANCE;
 
-	private BloodmoonSpawner bloodMoonSpawner;
+	private IBloodmoonSpawner bloodMoonSpawner;
 
 	boolean bloodMoon;
 	boolean forceBloodMoon;
@@ -31,7 +32,10 @@ public class BloodmoonHandler extends WorldSavedData
 	public BloodmoonHandler()
 	{
 		super("Bloodmoon");
-		bloodMoonSpawner = new BloodmoonSpawner();
+		if(ModIntegration.Mods.CMS.isLoaded())
+			bloodMoonSpawner = new BloodmoonSpawnerCMS();
+		else
+			bloodMoonSpawner = new BloodmoonSpawner();
 		bloodMoon = false;
 		forceBloodMoon = false;
 	}
@@ -39,7 +43,10 @@ public class BloodmoonHandler extends WorldSavedData
 	public BloodmoonHandler(String name)
 	{
 		super("Bloodmoon");
-		bloodMoonSpawner = new BloodmoonSpawner();
+		if(ModIntegration.Mods.CMS.isLoaded())
+			bloodMoonSpawner = new BloodmoonSpawnerCMS();
+		else
+			bloodMoonSpawner = new BloodmoonSpawner();
 		bloodMoon = false;
 		forceBloodMoon = false;
 	}
